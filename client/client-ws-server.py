@@ -9,7 +9,7 @@ import subprocess
 import threading
 import os
 
-WIFI_DEVICE_NAME = 'en1'
+WIFI_DEVICE_NAME = 'isotheth-wifi'
 
 # Initialize the tun0 device.
 tun = os.open('/dev/tun0', os.O_RDWR)
@@ -43,7 +43,7 @@ class TunReader(threading.Thread):
 class Handler(WebSocketHandler):
     def open(self):
         global connection
-        print "New connection opened."
+        print("New connection opened.")
         connection = self
 
     def on_message(self, message):
@@ -53,7 +53,7 @@ class Handler(WebSocketHandler):
 
     def on_close(self):
         global connection
-        print "Connection closed."
+        print("Connection closed.")
         connection = None
 
     def allow_draft76(self):
@@ -64,6 +64,6 @@ tunThread.daemon = True
 tunThread.start()
 
 wsServer = HTTPServer(Application([("/websocket", Handler)]))
-print "Server started."
+print("Server started.")
 wsServer.listen(6354, "169.254.134.89")
 IOLoop.instance().start()
